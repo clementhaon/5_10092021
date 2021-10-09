@@ -138,9 +138,11 @@ function addBasket(data) {
     if (isThisItemExist === false) {
       basket.push(produit);
       localStorage.setItem("basket", JSON.stringify(basket));
+      alert("Votre article à bien été mis au panier")
     } else {
       existingItem.quantity = parseInt(existingItem.quantity, 10) + parseInt(produit.quantity, 10);
       localStorage.setItem("basket", JSON.stringify(basket));
+      alert("La quantité du produit à bien été mise à jour")
     }
   })
 }

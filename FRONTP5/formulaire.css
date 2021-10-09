@@ -37,7 +37,7 @@ input[type="password"] {
 }
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border: 1px solid #5ef9a4;
+    border: 1px solid #9fc4c4;
 }
 span {
     margin-bottom: 20px;
@@ -85,19 +85,4 @@ input[type="submit"]:hover {
     visibility: visible;
     opacity: 1;
     color: red;
-}
-.progressRed {
-    background: red;
-    width: 33%;
-    visibility: visible;
-}
-.progressBlue {
-    background: #16d9e7;
-    width: 67%;
-    visibility: visible;
-}
-.progressGreen {
-    width: 100%;
-    background: #5ef9a4;
-    visibility: visible;
 }

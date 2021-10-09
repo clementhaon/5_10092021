@@ -84,7 +84,7 @@ main p {
 }
 .totalbasket {
     text-align: center;
-    margin-top: 45px;
+    margin-top: 25px;
 }
 .line {
     border-bottom: solid 2px #3E5151;
@@ -93,6 +93,22 @@ button {
     background-color: #3E5151;
     color: white;
     border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 1px 5px 6px gray;
+
+}
+button:hover {
+    transform: scale(1.1);
+    filter: brightness(135%);
+
+}
+.viderpanier {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#empty {
+    margin-top: 20px;
 }
 .panniervide {
     color: white;
@@ -104,6 +120,23 @@ button {
     font-size: 2.5rem;
     font-weight: bold;
     width: 100%;
+}
+.confirmation {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 30px 0;
+}
+.confirmationInfo {
+    color: white;
+    background-color: #3E5151;
+    opacity: 0.9;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 100%;
+
 }
 .imgBox {
     border-radius: 10px;

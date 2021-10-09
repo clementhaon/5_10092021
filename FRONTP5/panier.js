@@ -14,6 +14,7 @@ window.addEventListener('scroll', () => {
 let articleCard = JSON.parse(localStorage.getItem("basket"));
 
 
+let totalBasket = document.querySelector(".totalbasket");
 
 
 //Calcul du montant total du panier
@@ -22,9 +23,12 @@ function totalPrice() {
   for(let y = 0; y < articleCard.length; y++){
     total = total+(articleCard[y].price*articleCard[y].quantity)/100;
   }
-  let totalBasket = document.querySelector(".totalbasket");
-  totalBasket.textContent = "Montant à régler : " + total + ",00€";
+  totalBasket.textContent = "Prix total : " + total + ",00€";
+  localStorage.setItem("total", JSON.stringify(total));
+
 }
+//vider le panier
+let emptyButton = document.getElementById("empty");
 
 
 //Localstorage présent ou pas fontcion à executer en fonction
@@ -44,6 +48,10 @@ function myBasket() {
 function emptyBasket() {
   let emptyBasket = document.querySelector(".articlebasket");
   emptyBasket.innerHTML = "<p class='panniervide'>Votre panier est vide</p>";
+  let deleteForm = document.querySelector(".formulaire");
+  deleteForm.style.display = "none";
+  emptyButton.style.display = "none";
+  totalBasket.style.display = "none";
 }
 
 //Fonction article présent dans le panier
@@ -83,9 +91,16 @@ function createArticle(data) {
 
 }
 
+
+
 myBasket();
 totalPrice();
-
+//Vider le panier
+emptyButton.addEventListener('click', () => {
+  localStorage.removeItem("basket");
+  localStorage.removeItem("total");
+  myBasket();
+})
 
 
 //FORMULAIRE
@@ -95,7 +110,7 @@ const inputs = document.querySelectorAll(
   'input[type="text"]'
 );
 //Variable pour récupération des données
-let firstName, lastName, adress, city, email;
+let firstName, lastName, address, city, email;
 
 // Fonction concue pour le pointage de tous les éléments erreurs
 const errorDisplay = (tag, message, valid) => {
@@ -146,11 +161,11 @@ const nomChecker = (value) => {
 // vérification adresse 
 const adressChecker = (value) => {
     if (!value.match(/^[a-zA-Z0-9\s\,\''\-]*$/)) {
-      errorDisplay("adress", "L'adresse n'est pas valide");
-      adress = null;
+      errorDisplay("address", "L'adresse n'est pas valide");
+      address = null;
     } else {
-      errorDisplay("adress", "", true);
-      adress = value;
+      errorDisplay("address", "", true);
+      address = value;
     }
   };
 // vérification ville 
@@ -185,7 +200,7 @@ inputs.forEach((input) => {
       case "lastName":
         nomChecker(e.target.value);
         break;
-      case "adress":
+      case "address":
         adressChecker(e.target.value);
         break;
       case "city":
@@ -203,32 +218,20 @@ inputs.forEach((input) => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   let products = [];
-  products.push(articleCard);
-  
-  
-
-  if (firstName && lastName && adress && city && email) {
+  for (let i in articleCard) {
+      products.push(articleCard[i].id);
+  }
+  if (firstName && lastName && address && city && email) {
     const contact = {
       firstName,
       lastName,
-      adress,
+      address,
       city,
       email,
     };
     let order = {
       contact, products
     };
-
-
-    inputs.forEach((input) => (input.value = ""));
-
-    
-    firstName = null;
-    lastName = null;
-    adress = null;
-    city = null;
-    email = null;
-    alert("Inscription validée !");
     sendData(order);
   } else {
     alert("veuillez remplir correctement les champs");
@@ -243,13 +246,14 @@ function sendData(order) {
     },
     body: JSON.stringify(order),
   })
-    .then((response) => {
-      console.log(response); 
-      return response.json();
-    })
-    .then((response) => {
-    })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data.orderId)
+    localStorage.setItem("orderId", JSON.stringify(data.orderId));
 
-    console.log(order)   
+    localStorage.removeItem("basket");
+    window.location.href = `${window.location.origin}/FRONTP5/confirm.html`;
+  })
+
 }
 
