@@ -1,12 +1,15 @@
-Orinoco
+# Orinoco #
+
 This is the back end server for Project 5 of the Junior Web Developer path.
 
+### Prerequisites ###
 
-For launch the project :
+You will need to have Node and `npm` installed locally on your machine.
 
-Prerequisites
-You will need to have Node and npm installed locally on your machine.
+### Installation ###
 
-Installation
-Clone this repo. From JWDP5, run "npm install". You can then run the server with "node server". The server should run on localhost with default port 3000. 
-Run index.html in the folder FRONTP5.
+Clone this repo. From within the project folder, run `npm install`. You 
+can then run the server with `node server`. 
+The server should run on `localhost` with default port `3000`. If the
+server runs on another port for any reason, this is printed to the
+console when the server starts, e.g. `Listening on port 3001`.
