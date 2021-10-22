@@ -1,3 +1,13 @@
+function displayBasket() {
+  //Vérifier si le panier possède au moins une caméra :
+  if (localStorage.getItem("basket") === null || localStorage.getItem("basket") === "[]") {
+      document.querySelector("#basketPage").hidden = true;
+  } else {
+      document.querySelector("#basketPage").hidden = false;
+  }
+}
+
+//Récupération de l'API avec fetch
 function addProduct() {
     fetch("http://localhost:3000/api/cameras/") //appel api, callback, ... return une promesse
       .then(
@@ -13,7 +23,6 @@ function addProduct() {
                 oneCamera(data[i]);
             }
         }
-
       )
       .catch (function(error){
         alert("API ne fonctionne pas");
@@ -72,7 +81,7 @@ window.addEventListener('scroll', () => {
         nav.style.position = "static";
     }
 });
-
+displayBasket();
 
 
 

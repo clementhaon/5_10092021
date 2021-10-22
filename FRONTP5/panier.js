@@ -13,9 +13,9 @@ window.addEventListener('scroll', () => {
 
 let articleCard = JSON.parse(localStorage.getItem("basket"));
 
-
 let totalBasket = document.querySelector(".totalbasket");
 
+let emptyButton = document.getElementById("empty");
 
 //Calcul du montant total du panier
 function totalPrice() {
@@ -25,11 +25,7 @@ function totalPrice() {
   }
   totalBasket.textContent = "Prix total : " + total + ",00€";
   localStorage.setItem("total", JSON.stringify(total));
-
 }
-//vider le panier
-let emptyButton = document.getElementById("empty");
-
 
 //Localstorage présent ou pas fontcion à executer en fonction
 function myBasket() {
@@ -91,8 +87,6 @@ function createArticle(data) {
 
 }
 
-
-
 myBasket();
 totalPrice();
 //Vider le panier
@@ -102,13 +96,13 @@ emptyButton.addEventListener('click', () => {
   myBasket();
 })
 
-
 //FORMULAIRE
 //pointage des élements
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll(
   'input[type="text"]'
 );
+
 //Variable pour récupération des données
 let firstName, lastName, address, city, email;
 
@@ -142,6 +136,7 @@ const prenomChecker = (value) => {
     firstName = value;
   }
 };
+
 //Vérification de la validation du nom
 const nomChecker = (value) => {
     if (value.length > 0 && (value.length < 3 || value.length > 20)) {
@@ -158,6 +153,7 @@ const nomChecker = (value) => {
       lastName = value;
     }
   };
+
 // vérification adresse 
 const adressChecker = (value) => {
     if (!value.match(/^[a-zA-Z0-9\s\,\''\-]*$/)) {
@@ -168,6 +164,7 @@ const adressChecker = (value) => {
       address = value;
     }
   };
+
 // vérification ville 
 const cityChecker = (value) => {
     if (!value.match(/^[a-zA-Z0-9\s\,\''\-]*$/)) {
@@ -178,6 +175,7 @@ const cityChecker = (value) => {
       city = value;
     }
   };
+
 // vérification de la validité du mail
 const emailChecker = (value) => {
   if (!value.match(/^[\w_-]+@[\w-]+\.[a-z]{2,4}$/i)) {
@@ -188,9 +186,7 @@ const emailChecker = (value) => {
     email = value;
   }
 };
-
-
-
+//Permet de lancer les checker correspondant à chaque input grace à l'id
 inputs.forEach((input) => {
   input.addEventListener("input", (e) => {
     switch (e.target.id) {
@@ -214,6 +210,7 @@ inputs.forEach((input) => {
     }
   });
 });
+
 //Fonction d'envoi des éléments si valide
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -237,7 +234,7 @@ form.addEventListener("submit", (e) => {
     alert("veuillez remplir correctement les champs");
   }
 });
-
+//fonction permettant le post de la commande le retour de l'order id et l'ouverture de la page confirm
 function sendData(order) {
   fetch("http://localhost:3000/api/cameras/" + "order", {
     method: "POST",
@@ -248,12 +245,9 @@ function sendData(order) {
   })
   .then((response) => response.json())
   .then((data) => {
-    console.log(data.orderId)
     localStorage.setItem("orderId", JSON.stringify(data.orderId));
-
     localStorage.removeItem("basket");
-    window.location.href = `${window.location.origin}/FRONTP5/confirm.html`;
+    window.location.href = "confirm.html";
   })
-
-}
+};
 

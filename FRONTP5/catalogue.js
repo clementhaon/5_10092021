@@ -1,3 +1,11 @@
+function displayBasket() {
+  //Vérifier si le panier possède au moins une caméra :
+  if (localStorage.getItem("basket") === null || localStorage.getItem("basket") === "[]") {
+      document.querySelector("#basketPage").hidden = true;
+  } else {
+      document.querySelector("#basketPage").hidden = false;
+  }
+}
 //scroll nav
 const nav = document.querySelector("nav");
 
@@ -30,6 +38,9 @@ function addProductId() {
             addBasket(data);
         }
       )
+      .catch (function(error){
+        alert("API ne fonctionne pas");
+      })
   }
 
 // Création éléments
@@ -87,8 +98,6 @@ cameraItemFooter.appendChild(cameraButton);
 
 //création de l'article
 function theCamera(data){
-  
-
   // Remplissage des éléments
   cameraImage.src = data.imageUrl;
   cameraName.appendChild(document.createTextNode(data.name));
@@ -102,7 +111,6 @@ function theCamera(data){
     option.textContent = data.lenses[i];
     cameraSelect.appendChild(option);
   }
-
 }
 // Ajout du produit au panier
 function addBasket(data) {
@@ -144,7 +152,9 @@ function addBasket(data) {
       localStorage.setItem("basket", JSON.stringify(basket));
       alert("La quantité du produit à bien été mise à jour")
     }
+    displayBasket();
   })
 }
 
 addProductId();
+displayBasket();
